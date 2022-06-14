@@ -1,0 +1,2 @@
+fr.dawan.tpioc.dao.DaoImpl
+fr.dawan.tpioc.service.MetierImpl
