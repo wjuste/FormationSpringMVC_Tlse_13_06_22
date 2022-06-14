@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<!-- Injection bean par setter  
+		name => Création d'un bean avec plusieurs noms 
+		id => un seul nom  
+	-->
+
+	<bean  name="formationExcel, formation1"  class="fr.dawan.springcore.beans.Formation">
+		<property name="intitule" value="excel" />
+		<property name="duree" value="3" />
+		<property name="prix" value="700.0" />
+		<property name="description" value="Une formation sur excel" />
+	</bean>
+	
+	
+	<!-- 
+		Injection bean par constructeur 
+		scope permet de modifier la porté du bean
+		voir pdf page 46
+	 -->
+	 <bean id="formation2"  class="fr.dawan.springcore.beans.Formation" scope="prototype">
+	 	<constructor-arg value="autocad" />
+	 	<constructor-arg type="int" value="5" />
+	 	<constructor-arg index="2" value="2450.0" />
+		 <!--  	<constructor-arg name="description" value="formation autocad" />-->
+		 <constructor-arg name="description"><null/></constructor-arg>
+	 </bean>
+	 
+	 <!-- 
+	 
+	 1er méthode : 
+	 Il est aussi possible de fournir la reference d'une autre bean en utilisant ref 
+	 	Comme la classe Contact contient une variable de type adresse (private Adresse adr) 
+	 	IL va falloir qu'on lui fournisse la reference du bean adresse dans le bean contact 
+	 	Injection de dependances ==> injecter le bean adresse dans le bean contact 
+	 -->
+	 <bean id="adresse1" class="fr.dawan.springcore.beans.Adresse" >
+	 	<property name="rue" value="rue du taur" />
+	 	<property name="ville" value="Toulouse" />
+	 	<property name="codePostal" value="31000" />
+	 </bean>
+	 
+	 
+	 <!-- contact1.setAdr(adresse1) -->
+	 <bean id="contact1" class="fr.dawan.springcore.beans.Contact">
+	 	<property name="prenom" value="Marcel" />
+	 	<property name="nom" value="Etienne" />
+	 	<property name="adr" ref="adresse1"></property>
+	 </bean>
+	 	 
+	 <!-- 2ème méthode -->
+	<bean id="contact2" class="fr.dawan.springcore.beans.Contact">
+		<property name="prenom" value="Bruno" />
+		<property name="nom" value="Valentin" />
+		<property name="adr">
+			<!-- 
+				Quand on intègre la classe adresse dans contact : 
+					On enlève l'id car on ne peut pas le contact de l'exterieur
+			 -->
+			<bean class="fr.dawan.springcore.beans.Adresse">
+				<property name="rue" value="rue de jolimont" />
+				<property name="ville" value="Toulouse" />
+				<property name="codePostal" value="31200" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- 
+		autowire : Permet de preciser comment le bean sera injecté : byType, byName, constructor,
+				   none (pas d'autowiring)   : pdf page 50
+	 -->
+	 <bean id="contact3" class="fr.dawan.springcore.beans.Contact" autowire="byType">
+	 	<property name="prenom" value="Thierry" />
+	 	<property name="nom" value="Alexandre"/>
+	 </bean>
+	 
+	 <!-- init-method et destroy-method page 52 pdf -->
+	 <bean id="contact4" class="fr.dawan.springcore.beans.Contact" autowire="constructor" init-method="init"  destroy-method="destroy">
+	 	<constructor-arg value="Matheo" />
+	 	<constructor-arg value="Guerier" />
+	 </bean>
+	 
+	 <bean id="stagiaire1" class="fr.dawan.springcore.beans.Stagiaire" parent="contact3" autowire="byType">
+	 	<property name="prenom" value="Raoul" />
+	 	<property name="code" value="eti-1534878" />
+	 </bean>
+
+</beans>

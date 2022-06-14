@@ -3,15 +3,29 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	
+	<!-- 
+		On va dire à Spring quelles sont les classes qu'on souhaite instancier au demarrahe 
+		de notre application en créant des beans 
+		
+		Ses beans sont rangées dans le contexte de Spring, c'est une espace dans lequel Spring 
+		range ses éléments de configuration, dont les objets Spring qui sont les beans 
+		
+		Quand on crée un bean, on lui donne un id, et la classe (le chemin complet : le nom du package)
+		
+		
+	 -->
+	
 	<bean id="dao" class="fr.dawan.tpioc.dao.DaoImpl">
 	</bean>
 	
+	<!-- metier.setDao(dao) -->
 	<bean id="metier" class="fr.dawan.tpioc.service.MetierImpl">
 		<!-- 
 			Injection de dependance ; Association des objets metier et dao 
 			property fai appel directement à la méthode setDao
 	 	-->
-		<property name="dao" ref="dao"></property>
+		<property name="dao" ref="dao" />
 	</bean>
 	
 </beans>
