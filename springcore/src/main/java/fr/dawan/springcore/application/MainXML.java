@@ -41,7 +41,7 @@ public class MainXML {
 		System.out.println(stagiaire);
 				
 				
-		((AbstractApplicationContext) context).close();
+		((AbstractApplicationContext) context).close();   //Permet d'appeler la méthode destroy
 	}
 
 }

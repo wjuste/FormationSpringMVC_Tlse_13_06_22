@@ -3,6 +3,7 @@ package fr.dawan.springcore.application;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import fr.dawan.springcore.beans.Contact;
 import fr.dawan.springcore.beans.Formation;
 import fr.dawan.springcore.configurationJava.AppConf;
 
@@ -20,6 +21,9 @@ public class MainJavaConfiguration {
 		
 		Formation f3 = context.getBean("formationExcel", Formation.class);
 		System.out.println(f3);
+		
+		Contact c = context.getBean("contact1", Contact.class);
+		System.out.println(c);
 		
 	}
 

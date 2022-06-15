@@ -44,7 +44,6 @@
 	 	<property name="codePostal" value="31000" />
 	 </bean>
 	 
-	 
 	 <!-- contact1.setAdr(adresse1) -->
 	 <bean id="contact1" class="fr.dawan.springcore.beans.Contact">
 	 	<property name="prenom" value="Marcel" />
@@ -76,6 +75,7 @@
 	 <bean id="contact3" class="fr.dawan.springcore.beans.Contact" autowire="byType">
 	 	<property name="prenom" value="Thierry" />
 	 	<property name="nom" value="Alexandre"/>
+	 	
 	 </bean>
 	 
 	 <!-- init-method et destroy-method page 52 pdf -->
