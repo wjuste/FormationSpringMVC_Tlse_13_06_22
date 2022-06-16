@@ -1,13 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd"
+	>
 	
 	<!-- 
 		Le root-context.xml est un fichier dans lequel on viendra faire l'injection de dependance (declarer nos beans), 
 	 -->
-
 	
+	<!-- 
+		Datasource locale 
+			Spring crée un bean , crée la connexion 
+	 -->
+   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/springmvc5?useSSL=true" />
+        <property name="username" value="root" />
+        <property name="password" value="" />
+    </bean>
+    
+    
+    
+    <!-- 
+    	Ensuite Spring crée un bean entityManagerFactoryBean 
+    	On configure une EntityManagerFactory JPA dans un contexte d'application Spring 
+    		o IL va charge le driver jdbc (ref="dataSource")
+    			Le pilote JDBC, c'est une classe Java, une bibliothèque, un ensemble de classe qui vont être 
+    			chargée en mémoire et qui vont permettre à l'application Java de communiquer avec le systeme de 
+    			gestion de base de données 
+    		 o Il va se connecter à la base de données avec le mot de passe et le username 
+    		 o Il va créer les tables, pour cela on lui donne le package, là où se trouvent les entités   ==> value="fr.dawan.springmvc3.entities" 
+    		 
+    	-->
+     <bean id="entityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- Packages où seront recherché les entitées jpa-->
+        <property name="packagesToScan" value="fr.dawan.springmvc.entities" />
+       
+        <!-- jpaVendorAdapter est une notion propre à Spring; Il permet de brancher différentes implementations 
+        de JPA
+        	C'est le JpaVendorAdaptor qui fournit la configuration exacte de l'implementation de JPA;
+         -->
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    
+    
+    <!-- Configuration de la gestion de la transaction par Spring -->
+     <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <!-- Création d'un bean pour la  gestion des transction -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactoryBean" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    
 
 	<!-- creation du bean dao -->
 	<bean id="dao"  class="fr.dawan.springmvc.dao.UserDaoImpl"/>

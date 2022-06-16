@@ -3,6 +3,8 @@ package fr.dawan.springmvc.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 
 @Entity
@@ -14,6 +16,13 @@ public class User extends AbstractEntity{
 	private String nom;
 	private String email;
 	private String password; 
+	
+	/*
+	 * Cette annotation permet de definir de quelle façon sera stockée l'enumeration en base donnée, 
+	 * à savoir EnumType.ORDINAL (le premier aura la valeur 0, la deuxième la valeur...) 
+	 * ou EnumType.STRING (le nom de l'énumeration est stocké ex: ADMIN ou USER)
+	 */
+	@Enumerated(EnumType.STRING)  
 	private Role role;
 	
 
