@@ -15,7 +15,6 @@
 	 -->
 	<annotation-driven />
 	
-	
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- 
@@ -24,13 +23,13 @@
 		
 		Tous les URLs qui contiennent mapping="/resources/**" pourront être rediriger vers le dossier 
 		ressources ==> location="/resources/"
-		Par exemple si on crée des feuilles de styles CSS, ils seront accessible dans le dossier 
+		Par exemple si on crée des feuilles de styles CSS, ils seront être accessible dans le dossier 
 		resources  ===> location="/resources/" 
 		Et accessible via l'url qui contient le mot clé /resources/**
 	 -->
 	<resources mapping="/resources/**" location="/resources/" />
-
-
+	<resources mapping="/webjars/**" location="/webjars/" /> <!-- Pour Bootstrap -->
+   
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<!-- 

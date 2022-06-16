@@ -48,7 +48,7 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
@@ -65,13 +65,13 @@
         <property name="entityManagerFactory" ref="entityManagerFactoryBean" />
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
-    
-    
 
 	<!-- creation du bean dao -->
 	<bean id="dao"  class="fr.dawan.springmvc.dao.UserDaoImpl"/>
 	
 	<!-- Creation du bean service -->
-	<bean id="service" class="fr.dawan.springmvc.service.UserServiceImpl" />
+	<bean id="service" class="fr.dawan.springmvc.service.UserServiceImpl">
+		<property name="dao" ref="dao" />
+	</bean>
 		
 </beans>
