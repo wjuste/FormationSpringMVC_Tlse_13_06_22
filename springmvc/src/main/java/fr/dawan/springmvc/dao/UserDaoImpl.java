@@ -32,7 +32,6 @@ public class UserDaoImpl implements IUserDao{
 	@PersistenceContext
 	private EntityManager entityManager;
 
-
 	@Transactional
 	@Override
 	public void saveAndUpdate(User user) {

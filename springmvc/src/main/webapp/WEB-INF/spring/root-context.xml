@@ -7,5 +7,12 @@
 		Le root-context.xml est un fichier dans lequel on viendra faire l'injection de dependance (declarer nos beans), 
 	 -->
 
+	
+
+	<!-- creation du bean dao -->
+	<bean id="dao"  class="fr.dawan.springmvc.dao.UserDaoImpl"/>
+	
+	<!-- Creation du bean service -->
+	<bean id="service" class="fr.dawan.springmvc.service.UserServiceImpl" />
 		
 </beans>
