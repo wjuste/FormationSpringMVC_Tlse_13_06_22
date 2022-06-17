@@ -1,0 +1,52 @@
+<!-- Thymeleaf utiliser XTML donc toutes les balises doivent être fermées -->
+
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeLeaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{template1}"
+>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+	<body>
+		
+		<!-- Le contenu de notre va être à ce niveau -->
+		<div layout:fragment="content">
+		
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header text-white bg-primary">Consultation d'un compte</div>
+					<div class="card-body">
+						<form th:action="@{/bank/consultercompte}">
+							<div>
+								<label>Code compte : </label>
+								<input type="text" name="numCompte" th:value="${numCompte}"/>
+								<button type="submit" class="btn btn-primary"> OK</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				
+				<div class="card" th:if="${compte}">  <!-- On affiche les div que si on a un compte, et qu'il existe dans le modele -->
+					<div>Information sur le compte</div>
+				</div>
+				
+			</div>
+			
+			<div class="col-md-6">
+				<div class="card" th:if="${compte}"> 
+					<div>Opération sur le compte</div>
+				</div>
+				<div class="card" th:if="${compte}"> 
+					<div>Liste des opérations</div>
+				</div>
+			</div>
+		</div>
+			
+		
+		</div>
+	</body>
+</html>

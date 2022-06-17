@@ -3,6 +3,8 @@ package fr.dawan.yourbank31.service;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +12,7 @@ import fr.dawan.yourbank31.dao.CompteRepository;
 import fr.dawan.yourbank31.dao.OperationRepository;
 import fr.dawan.yourbank31.entities.Compte;
 import fr.dawan.yourbank31.entities.CompteCourant;
+import fr.dawan.yourbank31.entities.Operation;
 import fr.dawan.yourbank31.entities.Retrait;
 import fr.dawan.yourbank31.entities.Versement;
 import fr.dawan.yourbank31.service.exception.CompteIntrouvableException;
@@ -102,4 +105,12 @@ public class BankServiceImpl implements IBankService{
 		
 	}
 	
+	
+	@Override
+	public Page<Operation> listOperation(String numCpte, int page, int size) {
+		
+		//PageRequest est une implementation de  l'interface Pageable	
+		return operationRepository.listOperation(numCpte, PageRequest.of(page, size));
+			
+	}
 }
